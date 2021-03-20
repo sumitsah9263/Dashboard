@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="{%static 'css/final.css'%}">
+    <script src="{%static 'js/jquery.min.js'%}"></script>
+    <script src="{%static 'js/jquery.magnific-popup.min.js'%}"></script>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader pulse">
+            <h3 id="loader-text">ECG & PCG recorded</h3>
+        </div>
+    </div>
+    <script src="{% static 'js/final_loader.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readings | LarkAI</title>
+
+    <script src="{% static 'canvas js/canvasjs.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/info.json' %}"></script>
+    <script src="{% static 'static_jquery/js/jquery.js' %}"></script>
+    <script src="{%static 'js/jquery.min.js'%}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/reading.css'%}">
+    <link rel="stylesheet" href="{%static 'css/timer.css'%}">    
+</head>
+<body>
+    <!-- LOADER
+    <div id="preloader">
+        <div class="preloader pulse">
+            <h3>Start tracking</h3>
+        </div>
+    </div>
+    <!-- END LOADER -->
+    
+    <div class="body">
+        <div class="user-name">
+            {% for message in messages %}
+            <h3 style="color: black;">Welcome, {{message}} </h3>
+            {%endfor%}
+        </div>
+        <div class="main">
+            <div class="graph">
+                <div class="wrapper">
+                    <h1 id="h1ecg" style="color:#ED4D53;text-align: center;font-family: 'Alegreya Bold';">ECG Reading</h1>
+                    <div id="chart"></div>
+                    <script>
+                        var retake=0
+                        var save_data=[]
+                        var timer_status=false
+                        var done=false
+                        
+                        
+                        fill_graph_sensor()
+                        function fill_graph_sensor()
+                        {
+                            
+                            var dps = []; // dataPoints
+                            var chart = new CanvasJS.Chart("chart", {
+                            animationEnabled: true,
+                            zoomEnabled:true,
+                            //theme: "dark1",    // "light1", "dark1", "dark2"
+                            axisX: {
+                                viewportMinimum: 0,
+                                //viewportMaximum: 2.5,
+                                gridThickness: 0,
+                                tickLength: 0,
+                                lineThickness: 0,
+                                labelFormatter: function(){
+                                    return " ";
+                                }
+                            },
+                            axisY: {
+                                
+                                suffix: "",
+                                viewportMinimum: 100,
+                                viewportMaximum: 800,
+                                gridThickness: 0,
+                                tickLength: 0,
+                                lineThickness: 0,
+                                labelFormatter: function(){
+                                    return " ";
+                                }
+                            },
+                            
+                            data: [{
+                                type: "spline",
+                                markerType:"none",
+                                dataPoints: dps
+                            }]
+                           });
+                           
+                           var updateInterval = 5;//miliseconds
+                           var dataLength = 500; // number of dataPoints visible at any point
+                           var xAxis=0
+                           var updateChart = function () 
+                           {
+                            $.ajax({
+                                url:"{% url 'fetch_value' %}",
+                                success: function(data) {
+                                            for(let i=0;i<data.length;i++){
+                                                //console.log(data)
+
+                                                dps.push({
+                                                    y:Number(data[i].y),
+                                                    x:xAxis
+                                                })
+                                                
+                                                xAxis+=1
+                                            }
+                                            if(dps.length>dataLength){
+                                                chart.options.axisX.viewportMinimum=dps.length-dataLength;
+                                            }
+                                            chart.render();
+                                            
+                                        }
+                                        //chart.render()
+                                ,
+                                error: function(err){
+                                    console.log(err)
+                                    console.log("error he ji");
+                                }
+                            
+                            });
+                                //console.log(data)
+                                
+                                chart.render();
+                                //console.log('Chart data value :',chart.options.data[0].dataPoints)
+                            };
+                            updateChart();
+                            setint = setInterval(function(){
+                              updateChart()
+                            }, updateInterval);
+                        }                 
+                    </script>
+
+                    <h1 id="h1pcg" style="display:none;text-align: center;color:#ED4D53;font-family: 'Alegreya Bold';">PG Reading</h1>
+                    <div id="chart2" style="display:none"></div>
+                    <script type="text/javascript">
+                        function fill_graph_sensor2()
+                        {
+                            clearInterval(setint)
+                            //console.log('Inside fill graph sensor :',timer_status)
+                            var dps = []; // dataPoints
+                           var chart1 = new CanvasJS.Chart("chart2", {
+                            animationEnabled: true,
+                            //theme: "dark1",
+                            axisX: {
+                                gridThickness: 0,
+                                tickLength: 0,
+                                lineThickness: 0,
+                                labelFormatter: function(){
+                                    return " ";
+                                }
+                            },
+                            axisY: {
+                                
+                                suffix: "",
+                                viewportMinimum: 100,
+                                viewportMaximum: 800,
+                                gridThickness: 0,
+                                tickLength: 0,
+                                lineThickness: 0,
+                                labelFormatter: function(){
+                                    return " ";
+                                }
+                            },
+                            
+                            data: [{
+                                type: "spline",
+                                markerType:"none",
+                                dataPoints: dps
+                            }]
+                           });
+                           var updateInterval = 1000;//miliseconds
+                           var xAxisP=0;
+                            var dataLength = 3000; // number of dataPoints visible at any point
+                           var updateChart = function () 
+                           {
+                            $.ajax({
+                                url:"{% url 'fetch_value2' %}",
+                                success: function(data) {
+                                    console.log(data)
+                                    for(let i=0;i<data.length;i++){
+                                                
+
+                                                dps.push({
+                                                    y:Number(data[i].y),
+                                                    x:xAxisP
+                                                })
+                                                
+                                                xAxisP+=1
+                                            }
+                                            if(dps.length>dataLength){
+                                                chart1.options.axisX.viewportMinimum=dps.length-dataLength;
+                                            }
+                                            chart1.render();
+                                    
+                                },
+                                error: function(){
+                                    console.log("error he ji");
+                                }
+                            });
+                                chart1.render();
+                            };
+                            updateChart();
+                            setInterval(function(){
+                              updateChart()
+                            }, updateInterval);
+                        }
+                        
+                    </script>
+                </div>
+                <div class="clock" style="display:flex;margin:1% 0 0 20%;">
+                    <div id="app" ></div>
+                    <div class="buttons" style="margin:3% 0 0 3%">
+                            
+                        <button id="startBtn" value="start" class="btn btn--radius-2 btn--blue"  type="submit" onclick="runtimer()">Record ECG</button>
+                        <button id="startBtn2" value="start" class="btn btn--radius-2 btn--blue"  type="submit" onclick="runtimer2()">Record PCG</button>
+                        <button id="generate" class="btn btn--radius-2 btn--blue" type="submit" style="text-decoration: none;color:white;" onclick="show_pcg(),fill_graph_sensor2()">Done</button>
+                        <a href='/loading' style="text-decoration: none;color:white;"><button id="generate2" class="btn btn--radius-2 btn--blue" type="submit" onclick="loader()">Generate Report</button></a>
+                    </div>
+            </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    
+    <script src="{% static 'js/timer.js' %}"></script>
+</body>
+</html>

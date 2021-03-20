@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cardiomate | Doctor Registration</title>
+
+    <script src="{%static 'js/jquery.min.js'%}"></script>
+    <link href="{%static 'css/keyboard-dark.css' %}" rel="stylesheet" />
+    <script src="{%static 'js/jquery.keyboard.js' %}"></script>
+    <script src="{%static 'js/loader.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="{%static 'css/doc_log.css'%}" />
+</head>
+
+<body>
+    <!-- LOADER -->
+    <div id="preloader">
+        <div class="preloader pulse">
+            <h3>Cardiomate</h3>
+        </div>
+    </div>
+    <!-- END LOADER -->
+    <div class="logoimg">
+        <img src="{% static 'img/larkai.jpeg'%}" alt="">
+    </div>
+
+    <div class="loginForm">
+        <div class="formHead">
+            <div style="text-align: center;" class="logo">
+                <span><img style="height: 76px; justify-items: center" src="{% static 'img/heart.svg' %}"
+                        alt="heart-logo" /></span>
+            </div>
+        </div>
+
+        <div class="formBody">
+            <h1 style="text-align: center;color:#ED4D53;font-family: 'Alegreya', serif;">Doctor Registration</h1>
+            <form action="{% url 'doc_reg' %}" method="post">{%csrf_token%}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>First Name</h3>
+                                <input style="color: black;" id="fname" type="text" name='firstname' />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>Last Name</h3>
+                                <input style="color: black;" id="lname" type="text" name='lastname' />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>Username</h3>
+                                <input style="color: black;" id="uname" type="text" name='username' />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>Email</h3>
+                                <input style="color: black;" id="email" type="text" name='email' />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>Password</h3>
+                                <input style="color: black;" id="pass" type="password" name='password1'
+                                    maxlength="30" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="formInput">
+                                <h3>Confirm Password</h3>
+                                <input style="color: black;" id="cpass" type="password" name='password2'
+                                    maxlength="30" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="agree">
+                    <center>
+                        <label style="color:#2B3993;">By clicking Register, I agree to<br>
+                            Larkai’s <a href="#terms!" style="color:  #ED4D53;">Terms and Conditions</a> and <a
+                                href="#policies!" style="color:  #ED4D53;">Privacy
+                                Policy</a>.</label>
+                    </center>
+                </div>
+                <br>
+                <div class="loginButton">
+                    <button type="submit">Register</button>
+                </div>
+                <div class="loginlink">
+                    <center>
+                        <label style="color:  #2B3993;"><br>Already have and account? <a href="/"
+                                style="color:#ED4D53;">
+                                Login</a> here.</label>
+                    </center>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        console.log("Working");
+        $("#name,#email,#pass,#cpass").keyboard({
+            display: {
+                bksp: "\u2190",
+                accept: "enter",
+                normal: "ABC",
+                meta1: ".?123",
+                meta2: "#+=",
+            },
+            layout: "custom",
+            customLayout: {
+                normal: [
+                    'q w e r t y u i o p {bksp}',
+                    'a s d f g h j k l ',
+                    'z x c v b n m , .',
+                    '{c} {meta1} {space} {a}'
+                ],
+                shift: [
+                    "Q W E R T Y U I O P {bksp}",
+                    "A S D F G H J K L ",
+                    "{s} Z X C V B N M ! ? {s}",
+                    "{meta1} {space} {accept}",
+                ],
+                meta1: [
+                    "1 2 3 4 5 6 7 8 9 0 {bksp}",
+                    "- / : ; ( ) \u20ac & @ ",
+                    "{meta2} . , ? ! ' \" {meta2}",
+                    "{normal} {space} {accept}",
+                ],
+                meta2: [
+                    "[ ] { } # % ^ * + = {bksp}",
+                    "_ \\ | ~ < > $ \u00a3 \u00a5 ",
+                    "{meta1} . , ? ! ' \" {meta1}",
+                    "{normal} {space} {accept}",
+                ],
+            },
+        });
+        console.log("worked");
+    </script>
+
+</body>
+
+</html>

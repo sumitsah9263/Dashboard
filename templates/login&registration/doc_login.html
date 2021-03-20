@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <script src="{%static 'js/jquery.min.js'%}"></script>
+    <link href="{%static 'css/keyboard-dark.css' %}" rel="stylesheet">
+    <script src="{%static 'js/jquery.keyboard.js' %}"></script>
+    <script src="{%static 'js/loader.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/doc_login.css'%}">
+    <title>Cardiomate | Doctor Login</title>
+
+</head>
+
+<body>
+    <!-- LOADER -->
+    <div id="preloader">
+        <div class="preloader pulse">
+            {% for message in messages %}
+            <h3>Welcome,<br>Dr. {{message}} </h3>
+            {%endfor%}
+        </div>
+    </div>
+    <!-- END LOADER -->
+
+    <div class="logoimg">
+        <img src="{% static 'img/larkai.jpeg'%}" alt="">
+    </div>
+    <div>
+        <div class="loginForm">
+            <div class="formHead">
+                <div class="logo"><span><img style="height: 75px; justify-items:center;"
+                            src="{% static 'img/heart.svg' %}" alt="heart-logo"></span></div>
+            </div>
+
+
+            <form action="{% url 'doc_login' %}" method="POST">{%csrf_token%}
+                <div class="formBody">
+                    <h1 style="text-align: center; color: #ED4D53;font-family: 'Alegreya', serif;  ">Doctor Login</h1>
+                    <div>
+                        <div class="formInput">
+                            <div>Username</div>
+                            <input style="color: black;" name='username' id="id_username" type="text" maxlength="35"
+                                required>
+                        </div>
+                        <div class="formInput">
+                            <div>Password</div>
+                            <input style="color: black;" name='password' id="id_password" type="password" maxlength="30"
+                                required>
+                        </div>
+                        <div class="rememberMe">
+                            <center>
+                                <input id="remember" type="checkbox" name='rememberme' class="checkRemember">
+                                <label style="color:  #2B3993;" for="remember">Remember me</label>
+                            </center>
+                        </div><br>
+                        <div class="agree">
+                            <center>
+                                <label style="color:#2B3993;">By clicking Login, I agree to<br>
+                                    Larkai’s <a href="#terms!" style="color:  #ED4D53;">Terms and Conditions</a> and <a
+                                        href="#policies!" style="color:  #ED4D53;">Privacy
+                                        Policy</a>.</label>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="loginButton">
+                        <br><button type="submit">Login</button>
+                    </div><br>
+                    <div class="forget">
+                        <center><label style="color:#2B3993;">Forgot <a href="#username!"
+                                    style="color:  #ED4D53;">Username/Password</a>.</label></center>
+                    </div>
+                    <div class="signuplink">
+                        <center>
+                            <label style="color:  #2B3993;"><br>Don't have an account yet? <a href="/doc_reg"
+                                    style="color:#ED4D53;"> Sign Up</a>
+                                here.</label>
+                        </center>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <script>
+        console.log("Working")
+        $('#id_username,#id_password').keyboard({
+            display: {
+                'bksp': "\u2190",
+                'accept': 'enter',
+                'normal': 'ABC',
+                'meta1': '.?123',
+                'meta2': '#+='
+            },
+            layout: 'custom',
+            customLayout: {
+                'normal': [
+                    'q w e r t y u i o p {bksp}',
+                    'a s d f g h j k l ',
+                    'z x c v b n m , .',
+                    '{c} {meta1} {space} {a}'
+                ],
+                'shift': [
+                    'Q W E R T Y U I O P {bksp}',
+                    'A S D F G H J K L ',
+                    '{s} Z X C V B N M ! ? {s}',
+                    '{meta1} {space} {accept}'
+                ],
+                'meta1': [
+                    '1 2 3 4 5 6 7 8 9 0 {bksp}',
+                    '- / : ; ( ) \u20ac & @ ',
+                    '{meta2} . , ? ! \' " {meta2}',
+                    '{normal} {space} {accept}'
+                ],
+                'meta2': [
+                    '[ ] { } # % ^ * + = {bksp}',
+                    '_ \\ | ~ < > $ \u00a3 \u00a5 ',
+                    '{meta1} . , ? ! \' " {meta1}',
+                    '{normal} {space} {accept}'
+                ]
+            }
+
+        })
+        console.log("worked")
+    </script>
+</body>
+
+</html>
